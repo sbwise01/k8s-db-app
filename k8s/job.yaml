@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-app-init
+  labels:
+    app: db-app
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+      - name: db-app-init
+        image: sbwise/k8s-db-app-init:1.0.3
+        imagePullPolicy: IfNotPresent
+        command: ["/app/db-init.sh"]
+        envFrom:
+          - configMapRef:
+              name: db-app-config
+          - secretRef:
+              name: db-app-secret
+      restartPolicy: OnFailure

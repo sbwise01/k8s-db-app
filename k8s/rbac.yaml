@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flaskhelloworld
+  labels:
+    account: flaskhelloworld
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: flaskhelloworld
+rules:
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: flaskhelloworld
+subjects:
+- kind: ServiceAccount
+  name: flaskhelloworld
+roleRef:
+  kind: Role
+  name: flaskhelloworld
+  apiGroup: rbac.authorization.k8s.io
