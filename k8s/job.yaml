@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: db-app-init
-        image: sbwise/k8s-db-app-init:1.0.3
+        image: k8s-db-app-init
         imagePullPolicy: IfNotPresent
         command: ["/app/db-init.sh"]
         envFrom:
