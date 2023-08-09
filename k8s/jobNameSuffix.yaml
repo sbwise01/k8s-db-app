@@ -1,0 +1,8 @@
+apiVersion: internal
+kind: JobNameSuffix
+metadata:
+  name: job-name-suffix
+  annotations:
+    config.kubernetes.io/function: |
+      exec:
+        path: job_name_suffix.sh

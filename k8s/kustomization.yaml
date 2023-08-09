@@ -12,6 +12,9 @@ images:
     newName: sbwise/k8s-db-app-init
     newTag: "1.0.3"
 
+transformers:
+  - jobNameSuffix.yaml
+
 resources:
   - configmap.yaml
   - deployment.yaml
