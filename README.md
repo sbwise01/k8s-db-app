@@ -11,22 +11,21 @@ consumer the database objects
 1. `docker build -t sbwise/k8s-db-app:1.0.0 ./db-app`
 1. `docker push sbwise/k8s-db-app:1.0.0`
 
-## Minikube
-1. Download and install the minikube binary appropriate to your OS platform
-   1. See https://github.com/kubernetes/minikube/releases
-   1. For example, for Mac OS with M1 chip:  https://github.com/kubernetes/minikube/releases/download/v1.30.1/minikube-darwin-arm64.tar.gz
-1. Run minikube `minikube start`
-1. Deploy the kustomize:  `kubectl apply -k ./k8s`
-   1. Alter the image in `./k8s/app.yaml` to the one you built following the build instructions
-1. Create a port forward: `kubectl port-forward service/flaskhelloworld 5000:5000`
-1. Test the application in your web browser:  `http://localhost:5000/`
-
 ## kind
 1. Install the kind application appropriate to your OS platform
    1. See https://kind.sigs.k8s.io/docs/user/quick-start/#installation
    1. For example, for Mac OS:  `brew install kind`
-1. Create a kind cluster `kind create cluster`
-1. Deploy the kustomize:  `kubectl apply -k ./k8s`
-   1. Alter the image in `./k8s/app.yaml` to the one you built following the build instructions
-1. Create a port forward: `kubectl port-forward service/flaskhelloworld 5000:5000`
-1. Test the application in your web browser:  `http://localhost:5000/`
+1. Create a kind cluster `kind create cluster --config ./deploy/kind/config.yaml`
+1. Deploy infrastructure dependencies of the application
+   1. `kubectl apply -k ./deploy/k8s/dependencies`
+   1. This deploys the following infrastructure resources
+      1. Database secrets
+      1. Postgres database
+      1. Nginx Ingress Controller
+1. Deploy the kustomize:  `kubectl apply -k ./deploy/k8s/app`
+   1. Alter the image in `./deploy/k8s/app/kustomization.yaml` to the one you built following the build instructions
+1. Test the application using curl
+   1. `curl --resolve "flaskhelloworld.info:8080:127.0.0.1" -s http://flaskhelloworld.info:8080/`
+1. Test the application in a web browser
+   1. Add `127.0.0.1	flaskhelloworld.info` to `/etc/hosts`
+   1. Browse to http://flaskhelloworld.info:8080/
