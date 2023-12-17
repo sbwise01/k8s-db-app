@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: db-app-config
 data:
-  PGHOST: '192.168.10.119'
+  PGHOST: 'postgres'
   PGDATABASE: 'postgres'
   PGPORT: '5432'
-  PGUSER: 'brad'
