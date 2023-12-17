@@ -20,3 +20,13 @@ consumer the database objects
    1. Alter the image in `./k8s/app.yaml` to the one you built following the build instructions
 1. Create a port forward: `kubectl port-forward service/flaskhelloworld 5000:5000`
 1. Test the application in your web browser:  `http://localhost:5000/`
+
+## kind
+1. Install the kind application appropriate to your OS platform
+   1. See https://kind.sigs.k8s.io/docs/user/quick-start/#installation
+   1. For example, for Mac OS:  `brew install kind`
+1. Create a kind cluster `kind create cluster`
+1. Deploy the kustomize:  `kubectl apply -k ./k8s`
+   1. Alter the image in `./k8s/app.yaml` to the one you built following the build instructions
+1. Create a port forward: `kubectl port-forward service/flaskhelloworld 5000:5000`
+1. Test the application in your web browser:  `http://localhost:5000/`
